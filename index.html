@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clínica Dental Sonrisa</title>
+<style>
+:root{
+  --bg:#f4f7fb; --card:#ffffff; --text:#1f2937; --muted:#5b6474; --line:#dfe5ee;
+  --primary:#0b6fb8; --primary-soft:#e3f1fc; --ok:#15803d; --ok-soft:#dcfce7;
+  --warn:#b45309; --warn-soft:#fef3c7; --danger:#c62828; --danger-soft:#fde8e8;
+  --wa:#1f9d55; --radius:16px; --shadow:0 2px 10px rgba(20,40,80,.07);
+}
+*{box-sizing:border-box}
+html{font-size:18px}
+html.grande{font-size:21px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.45;padding-bottom:90px}
+button,input,select,textarea{font:inherit;color:inherit}
+header{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.top{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px}
+.logo{font-size:1.8rem}
+.brand b{display:block;font-size:1.15rem}
+.brand span{color:var(--muted);font-size:.85rem}
+.top .sp{flex:1}
+.btn-letra{border:2px solid var(--line);background:var(--card);border-radius:12px;padding:8px 12px;cursor:pointer;font-weight:700}
+nav.tabs{max-width:1100px;margin:0 auto;padding:0 16px 10px;display:flex;gap:8px;flex-wrap:wrap}
+nav.tabs button{border:none;background:transparent;padding:10px 14px;border-radius:12px;cursor:pointer;font-weight:600;color:var(--muted)}
+nav.tabs button.on{background:var(--primary-soft);color:var(--primary)}
+main{max-width:1100px;margin:0 auto;padding:18px 16px}
+h1{font-size:1.5rem;margin:0 0 4px}
+h2{font-size:1.2rem;margin:22px 0 10px}
+.ayuda{background:var(--primary-soft);color:#0a4f84;border-radius:12px;padding:10px 14px;margin:8px 0 16px;font-size:.95rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.stat b{font-size:1.9rem;display:block}
+.stat span{color:var(--muted);font-size:.9rem}
+.tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:130px;cursor:pointer;border:2px solid var(--line);background:var(--card);border-radius:var(--radius);font-weight:700;font-size:1.05rem;box-shadow:var(--shadow)}
+.tile:hover,.tile:focus{border-color:var(--primary);outline:none}
+.tile i{font-style:normal;font-size:2.4rem}
+.tile small{font-weight:400;color:var(--muted);font-size:.8rem;text-align:center;padding:0 8px}
+.btn{border:none;border-radius:12px;padding:12px 18px;min-height:48px;cursor:pointer;font-weight:700;background:var(--line);color:var(--text)}
+.btn.pri{background:var(--primary);color:#fff}
+.btn.ok{background:var(--ok);color:#fff}
+.btn.wa{background:var(--wa);color:#fff}
+.btn.danger{background:var(--danger-soft);color:var(--danger)}
+.btn.ghost{background:transparent;border:2px solid var(--line)}
+.btn.big{font-size:1.1rem;padding:14px 22px}
+.btn.sm{min-height:42px;padding:8px 12px;font-size:.9rem}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.between{justify-content:space-between}
+.list{display:flex;flex-direction:column;gap:10px}
+.item{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--primary);border-radius:14px;padding:12px 14px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;box-shadow:var(--shadow)}
+.item .hora{font-size:1.4rem;font-weight:800;min-width:68px}
+.item .info{flex:1;min-width:180px}
+.item .info b{font-size:1.05rem}
+.item .info div{color:var(--muted);font-size:.9rem}
+.item .acc{display:flex;gap:8px;flex-wrap:wrap}
+.badge{display:inline-block;border-radius:999px;padding:3px 10px;font-size:.8rem;font-weight:700}
+.b-pend{background:var(--warn-soft);color:var(--warn)}
+.b-ok{background:var(--ok-soft);color:var(--ok)}
+.b-no{background:var(--danger-soft);color:var(--danger)}
+.b-info{background:var(--primary-soft);color:var(--primary)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}
+.chip{border:2px solid var(--line);background:var(--card);border-radius:999px;padding:8px 14px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:6px}
+.chip.on{border-color:var(--primary);background:var(--primary-soft);color:var(--primary)}
+.dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+.daybar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.daybar .fecha{font-size:1.2rem;font-weight:800;text-transform:capitalize;flex:1;min-width:200px}
+label{display:block;font-weight:700;margin:12px 0 6px}
+input,select,textarea{width:100%;border:2px solid var(--line);border-radius:12px;padding:12px;background:#fff;min-height:50px}
+input:focus,select:focus,textarea:focus{border-color:var(--primary);outline:none}
+textarea{min-height:90px;resize:vertical}
+.vacio{color:var(--muted);text-align:center;padding:26px;border:2px dashed var(--line);border-radius:var(--radius)}
+.alerta{background:var(--danger-soft);color:var(--danger);border-radius:12px;padding:10px 14px;font-weight:700}
+/* odontograma */
+.odonto{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}
+.quad small{display:block;color:var(--muted);font-size:.8rem;margin-bottom:4px}
+.teeth{display:grid;grid-template-columns:repeat(8,1fr);gap:5px}
+.tooth{aspect-ratio:3/4;border:2px solid #9aa6b8;border-radius:10px 10px 14px 14px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:3px;font-size:.75rem;font-weight:700;cursor:pointer;position:relative;background:#fff}
+.tooth.falta{background:#e5e7eb;color:#6b7280}
+.tooth.falta::after{content:"✕";position:absolute;top:10%;font-size:1.3rem;color:#6b7280}
+.leyenda{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:.85rem}
+.leyenda span{display:flex;align-items:center;gap:6px}
+.leyenda i{width:16px;height:16px;border-radius:4px;border:1px solid #9aa6b8;display:inline-block}
+.estado-pick{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.estado-pick button{display:flex;align-items:center;gap:10px;justify-content:flex-start}
+.estado-pick i{width:22px;height:22px;border-radius:6px;border:1px solid #9aa6b8;display:inline-block}
+table{width:100%;border-collapse:collapse}
+td,th{padding:10px 6px;border-bottom:1px solid var(--line);text-align:left}
+.total{font-size:1.3rem;font-weight:800;text-align:right;margin-top:10px}
+.metodos{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.metodos button.on{background:var(--primary);color:#fff}
+/* modal */
+.ov{position:fixed;inset:0;background:rgba(15,25,45,.45);display:none;align-items:flex-start;justify-content:center;z-index:50;overflow-y:auto;padding:24px 12px}
+.ov.on{display:flex}
+.modal{background:var(--card);border-radius:20px;max-width:560px;width:100%;padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.modal h3{margin:0 0 6px;font-size:1.3rem}
+.modal .acc{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
+.toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:#123;color:#fff;padding:14px 20px;border-radius:14px;font-weight:700;z-index:60;display:none;max-width:90%;text-align:center}
+.toast.on{display:block}
+footer{max-width:1100px;margin:30px auto 0;padding:0 16px;color:var(--muted);font-size:.85rem}
+footer .stack{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+footer .stack span{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.bottomnav{display:none}
+.hidden{display:none!important}
+@media (max-width:760px){
+  html{font-size:17px} html.grande{font-size:20px}
+  nav.tabs{display:none}
+  .g4{grid-template-columns:1fr 1fr}
+  .g3,.g2{grid-template-columns:1fr}
+  .odonto{grid-template-columns:1fr}
+  .tile{min-height:110px}
+  .bottomnav{display:grid;grid-template-columns:repeat(6,1fr);position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);z-index:30;padding:6px 2px calc(6px + env(safe-area-inset-bottom))}
+  .bottomnav button{border:none;background:none;display:flex;flex-direction:column;align-items:center;font-size:.68rem;font-weight:700;color:var(--muted);padding:4px 0;cursor:pointer}
+  .bottomnav button i{font-style:normal;font-size:1.4rem}
+  .bottomnav button.on{color:var(--primary)}
+  .brand span{display:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="top">
+    <div class="logo">🦷</div>
+    <div class="brand"><b>Clínica Dental Sonrisa</b><span id="hoyTxt"></span></div>
+    <div class="sp"></div>
+    <button class="btn-letra" onclick="app.letra()" title="Cambiar tamaño de letra">A<sup>+</sup> Letra</button>
+  </div>
+  <nav class="tabs" id="tabs"></nav>
+</header>
+
+<main id="main"></main>
+
+<footer>
+  <b>Versión de prueba (beta).</b> Los datos son de ejemplo y se guardan solo en este navegador.
+  <div class="stack"><span>Next.js</span><span>Supabase</span><span>Firebase</span><span>Resend</span><span>Brevo</span><span>Vercel</span></div>
+  La versión final usará estas herramientas para guardar todo en la nube y enviar los recordatorios solos.
+  <div style="margin-top:8px"><button class="btn sm ghost" onclick="app.reset()">Restaurar datos de ejemplo</button></div>
+</footer>
+
+<nav class="bottomnav" id="bnav"></nav>
+<div class="ov" id="ov"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+const CLINICA='Clínica Dental Sonrisa';
+const SECCIONES=[
+  {id:'inicio',t:'Inicio',i:'🏠'},
+  {id:'turnos',t:'Turnos',i:'📅',d:'Ver y dar turnos'},
+  {id:'pacientes',t:'Historia clínica',c:'Pacientes',i:'🦷',d:'Fichas y odontograma'},
+  {id:'presupuestos',t:'Presupuestos',i:'📝',d:'Armar e imprimir'},
+  {id:'recordatorios',t:'Recordatorios',c:'Avisos',i:'🔔',d:'Avisar por WhatsApp o email'},
+  {id:'cobros',t:'Cobros',i:'💵',d:'Registrar pagos'}
+];
+const PRACTICAS=[['Consulta / control',25000],['Limpieza',40000],['Arreglo de caries',55000],['Extracción',60000],['Tratamiento de conducto',180000],['Corona',350000],['Blanqueamiento',150000],['Urgencia',35000]];
+const DIENTE={sano:['Sano','#ffffff'],caries:['Caries','#ef4444'],arreglado:['Arreglado','#3b82f6'],corona:['Corona','#f59e0b'],conducto:['Trat. de conducto','#8b5cf6'],falta:['Falta / extraído','#d1d5db']};
+const METODOS=['Efectivo','Transferencia','Débito','Crédito'];
+const KEY='clinica_dental_beta_v1';
+
+// ---------- utilidades ----------
+const $=s=>document.querySelector(s);
+const uid=()=>Math.random().toString(36).slice(2,9);
+const pad=n=>String(n).padStart(2,'0');
+const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const parse=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
+const addDias=(s,n)=>{const d=parse(s);d.setDate(d.getDate()+n);return iso(d)};
+const HOY=iso(new Date());
+const fLarga=s=>parse(s).toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long'});
+const fCorta=s=>parse(s).toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'});
+const plata=n=>'$ '+Math.round(n).toLocaleString('es-AR');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const HORAS=[];for(let h=8;h<20;h++){HORAS.push(pad(h)+':00',pad(h)+':30')}
+
+// ---------- datos ----------
+function semilla(){
+  const pros=[{id:'p1',nombre:'Dra. Laura Méndez',color:'#0ea5e9'},{id:'p2',nombre:'Dr. Martín Ríos',color:'#10b981'},{id:'p3',nombre:'Dra. Sofía Paz',color:'#f97316'}];
+  const P=(id,nombre,dni,tel,email,nac,os,alergias,dientes)=>({id,nombre,dni,tel,email,nac,os,alergias,dientes:dientes||{},notas:[]});
+  const pacientes=[
+    P('a1','Rosa Giménez','12.345.678','2972 41-2345','rosa@mail.com','1951-03-12','PAMI','Penicilina',{16:'arreglado',26:'corona',36:'falta',46:'caries'}),
+    P('a2','Jorge Albornoz','14.222.901','2972 42-8812','jorge@mail.com','1958-07-30','OSDE','',{11:'conducto',21:'corona',37:'falta',38:'falta'}),
+    P('a3','Marta Sepúlveda','20.118.334','2972 45-0090','marta@mail.com','1967-11-02','Particular','',{24:'caries',25:'caries'}),
+    P('a4','Lucas Fernández','38.990.120','2972 50-1177','lucas@mail.com','1995-01-19','Swiss Medical','',{}),
+    P('a5','Elena Quiroga','10.555.222','2972 41-7788','elena@mail.com','1946-05-25','PAMI','Anestesia con epinefrina',{17:'falta',18:'falta',47:'falta',48:'falta',31:'arreglado'}),
+    P('a6','Tomás Vidal','42.301.876','2972 53-2210','tomas@mail.com','2001-09-08','OSDE','',{})
+  ];
+  pacientes[0].notas.push({f:addDias(HOY,-30),pro:'p1',t:'Control general. Se indica arreglo en pieza 46.'});
+  pacientes[1].notas.push({f:addDias(HOY,-60),pro:'p2',t:'Finaliza tratamiento de conducto en pieza 11. Próximo paso: corona.'});
+  const M=addDias(HOY,1);
+  const T=(pac,pro,fecha,hora,prac,estado)=>({id:uid(),pac,pro,fecha,hora,prac,estado:estado||'pendiente',recordado:false});
+  const turnos=[
+    T('a1','p1',HOY,'09:00','Arreglo de caries','atendido'),
+    T('a3','p2',HOY,'09:30','Consulta / control','atendido'),
+    T('a4','p3',HOY,'10:30','Limpieza'),
+    T('a2','p2',HOY,'11:00','Corona'),
+    T('a5','p1',HOY,'15:00','Consulta / control'),
+    T('a6','p3',HOY,'17:30','Blanqueamiento'),
+    T('a3','p1',M,'09:00','Arreglo de caries'),
+    T('a5','p2',M,'10:00','Extracción'),
+    T('a1','p1',M,'16:30','Consulta / control'),
+    T('a4','p3',addDias(HOY,3),'12:00','Consulta / control')
+  ];
+  const presupuestos=[
+    {id:uid(),pac:'a2',pro:'p2',fecha:addDias(HOY,-20),estado:'aceptado',items:[{prac:'Tratamiento de conducto',diente:'11',precio:180000},{prac:'Corona',diente:'11',precio:350000}]},
+    {id:uid(),pac:'a3',pro:'p1',fecha:addDias(HOY,-2),estado:'pendiente',items:[{prac:'Arreglo de caries',diente:'24',precio:55000},{prac:'Arreglo de caries',diente:'25',precio:55000}]}
+  ];
+  const pagos=[
+    {id:uid(),pac:'a2',fecha:addDias(HOY,-20),monto:250000,metodo:'Transferencia',concepto:'Seña tratamiento'},
+    {id:uid(),pac:'a1',fecha:HOY,monto:55000,metodo:'Efectivo',concepto:'Arreglo de caries'},
+    {id:uid(),pac:'a3',fecha:HOY,monto:25000,metodo:'Débito',concepto:'Consulta'}
+  ];
+  return {pros,pacientes,turnos,presupuestos,pagos};
+}
+let S;
+try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){S=null}
+if(!S||!S.pros)S=semilla();
+const guardar=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+guardar();
+const pac=id=>S.pacientes.find(p=>p.id===id)||{nombre:'—'};
+const pro=id=>S.pros.find(p=>p.id===id)||{nombre:'—',color:'#999'};
+const totalPres=p=>p.items.reduce((a,i)=>a+Number(i.precio||0),0);
+const saldo=id=>S.presupuestos.filter(p=>p.pac===id&&p.estado==='aceptado').reduce((a,p)=>a+totalPres(p),0)-S.pagos.filter(p=>p.pac===id).reduce((a,p)=>a+Number(p.monto),0);
+
+// ---------- estado de pantalla ----------
+let V={sec:'inicio',dia:HOY,filtroPro:'todos',ficha:null,busca:'',diaAviso:addDias(HOY,1)};
+try{if(localStorage.getItem(KEY+'_letra')==='1')document.documentElement.classList.add('grande')}catch(e){}
+
+// ---------- UI genérica ----------
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2600)}
+function modal(html){$('#modal').innerHTML=html;$('#ov').classList.add('on');const f=$('#modal input,#modal select');if(f&&window.innerWidth>760)f.focus()}
+function cerrar(){$('#ov').classList.remove('on')}
+$('#ov').addEventListener('click',e=>{if(e.target.id==='ov')cerrar()});
+const optsPac=sel=>S.pacientes.slice().sort((a,b)=>a.nombre.localeCompare(b.nombre)).map(p=>`<option value="${p.id}" ${p.id===sel?'selected':''}>${esc(p.nombre)}</option>`).join('');
+const optsPro=sel=>S.pros.map(p=>`<option value="${p.id}" ${p.id===sel?'selected':''}>${esc(p.nombre)}</option>`).join('');
+const optsPrac=sel=>PRACTICAS.map(([n,pr])=>`<option value="${esc(n)}" data-p="${pr}" ${n===sel?'selected':''}>${esc(n)} — ${plata(pr)}</option>`).join('');
+const badge=e=>({pendiente:'<span class="badge b-pend">Por atender</span>',atendido:'<span class="badge b-ok">Atendido</span>',ausente:'<span class="badge b-no">No vino</span>'}[e]);
+
+function nav(){
+  const h=SECCIONES.map(s=>`<button class="${V.sec===s.id?'on':''}" onclick="app.ir('${s.id}')">${s.i} ${s.t}</button>`).join('');
+  $('#tabs').innerHTML=h;
+  $('#bnav').innerHTML=SECCIONES.map(s=>`<button class="${V.sec===s.id?'on':''}" onclick="app.ir('${s.id}')"><i>${s.i}</i>${s.c||s.t}</button>`).join('');
+  $('#hoyTxt').textContent=fLarga(HOY);
+}
+function render(){nav();const f=VISTAS[V.sec];$('#main').innerHTML=f();window.scrollTo(0,0)}
+
+// ---------- vistas ----------
+const VISTAS={
+inicio(){
+  const hoy=S.turnos.filter(t=>t.fecha===HOY);
+  const aten=hoy.filter(t=>t.estado==='atendido').length;
+  const porRec=S.turnos.filter(t=>t.fecha===addDias(HOY,1)&&!t.recordado).length;
+  const cobrado=S.pagos.filter(p=>p.fecha===HOY).reduce((a,p)=>a+Number(p.monto),0);
+  const prox=hoy.filter(t=>t.estado==='pendiente').sort((a,b)=>a.hora.localeCompare(b.hora)).slice(0,4);
+  const hr=new Date().getHours();const sal=hr<13?'Buen día':hr<20?'Buenas tardes':'Buenas noches';
+  return `<h1>${sal} 👋</h1><div class="ayuda">Tocá uno de los botones grandes para empezar. Siempre podés volver acá con <b>🏠 Inicio</b>.</div>
+  <div class="grid g4">
+    <div class="card stat"><b>${hoy.length}</b><span>Turnos de hoy</span></div>
+    <div class="card stat"><b>${aten}</b><span>Ya atendidos</span></div>
+    <div class="card stat"><b>${porRec}</b><span>Avisos pendientes para mañana</span></div>
+    <div class="card stat"><b>${plata(cobrado)}</b><span>Cobrado hoy</span></div>
+  </div>
+  <h2>¿Qué querés hacer?</h2>
+  <div class="grid g3">${SECCIONES.slice(1).map(s=>`<button class="tile" onclick="app.ir('${s.id}')"><i>${s.i}</i>${s.t}<small>${s.d}</small></button>`).join('')}
+  <button class="tile" onclick="app.nuevoTurno()" style="border-color:var(--primary);background:var(--primary-soft)"><i>➕</i>Dar un turno nuevo<small>Lo más usado</small></button></div>
+  <h2>Próximos pacientes de hoy</h2>
+  ${prox.length?`<div class="list">${prox.map(itemTurno).join('')}</div>`:'<div class="vacio">No quedan pacientes por atender hoy 🎉</div>'}`;
+},
+turnos(){
+  let ts=S.turnos.filter(t=>t.fecha===V.dia);
+  if(V.filtroPro!=='todos')ts=ts.filter(t=>t.pro===V.filtroPro);
+  ts.sort((a,b)=>a.hora.localeCompare(b.hora));
+  return `<div class="row between"><h1>📅 Turnos</h1><button class="btn pri big" onclick="app.nuevoTurno()">➕ Dar turno</button></div>
+  <div class="ayuda">Elegí el día con las flechas. Cuando llega el paciente tocá <b>✔ Atendido</b>.</div>
+  <div class="card"><div class="daybar">
+    <button class="btn" onclick="app.dia(-1)" aria-label="Día anterior">◀</button>
+    <div class="fecha">${fLarga(V.dia)}${V.dia===HOY?' <span class="badge b-info">HOY</span>':''}</div>
+    <button class="btn" onclick="app.dia(1)" aria-label="Día siguiente">▶</button>
+    ${V.dia!==HOY?'<button class="btn ghost" onclick="app.diaHoy()">Volver a hoy</button>':''}
+  </div></div>
+  <div class="chips"><button class="chip ${V.filtroPro==='todos'?'on':''}" onclick="app.filtro('todos')">Todos</button>
+  ${S.pros.map(p=>`<button class="chip ${V.filtroPro===p.id?'on':''}" onclick="app.filtro('${p.id}')"><span class="dot" style="background:${p.color}"></span>${esc(p.nombre)}</button>`).join('')}</div>
+  ${ts.length?`<div class="list">${ts.map(itemTurno).join('')}</div>`:'<div class="vacio">No hay turnos este día.<br><br><button class="btn pri" onclick="app.nuevoTurno()">➕ Dar un turno</button></div>'}`;
+},
+pacientes(){
+  if(V.ficha)return ficha(V.ficha);
+  const q=V.busca.toLowerCase();
+  const ps=S.pacientes.filter(p=>!q||p.nombre.toLowerCase().includes(q)||p.dni.replace(/\D/g,'').includes(q.replace(/\D/g,'')||'§')).sort((a,b)=>a.nombre.localeCompare(b.nombre));
+  return `<div class="row between"><h1>🦷 Historia clínica</h1><button class="btn pri big" onclick="app.editarPac()">➕ Paciente nuevo</button></div>
+  <div class="ayuda">Escribí el nombre o el DNI para buscar. Tocá un paciente para ver su ficha y sus dientes.</div>
+  <input id="busca" placeholder="🔎 Buscar por nombre o DNI..." value="${esc(V.busca)}" oninput="app.buscar(this.value)">
+  <div class="list" style="margin-top:14px">${ps.map(p=>{const s=saldo(p.id);return `<div class="item" style="cursor:pointer" onclick="app.verFicha('${p.id}')"><div class="info"><b>${esc(p.nombre)}</b><div>DNI ${esc(p.dni)} · ${esc(p.os)} · ${esc(p.tel)}</div></div>
+  ${p.alergias?'<span class="badge b-no">⚠ Alergia</span>':''}${s>0?`<span class="badge b-pend">Debe ${plata(s)}</span>`:''}<span style="font-size:1.4rem">›</span></div>`}).join('')||'<div class="vacio">No se encontró ningún paciente.</div>'}</div>`;
+},
+presupuestos(){
+  const ps=S.presupuestos.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  return `<div class="row between"><h1>📝 Presupuestos</h1><button class="btn pri big" onclick="app.nuevoPres()">➕ Nuevo presupuesto</button></div>
+  <div class="ayuda">Armá el presupuesto, imprimilo para el paciente y marcá si lo <b>aceptó</b>. Los aceptados se suman a lo que debe pagar.</div>
+  <div class="list">${ps.map(p=>`<div class="item" style="border-left-color:${pro(p.pro).color}"><div class="info"><b>${esc(pac(p.pac).nombre)}</b>
+  <div>${fCorta(p.fecha)} · ${esc(pro(p.pro).nombre)} · ${p.items.length} práctica(s)</div><div style="color:var(--text);font-weight:800;font-size:1.1rem">${plata(totalPres(p))}</div></div>
+  ${p.estado==='aceptado'?'<span class="badge b-ok">Aceptado</span>':p.estado==='rechazado'?'<span class="badge b-no">Rechazado</span>':'<span class="badge b-pend">Esperando respuesta</span>'}
+  <div class="acc">${p.estado==='pendiente'?`<button class="btn ok sm" onclick="app.estPres('${p.id}','aceptado')">✔ Aceptó</button><button class="btn danger sm" onclick="app.estPres('${p.id}','rechazado')">✖ No aceptó</button>`:''}
+  <button class="btn sm" onclick="app.imprimir('${p.id}')">🖨 Imprimir</button></div></div>`).join('')||'<div class="vacio">Todavía no hay presupuestos.</div>'}</div>`;
+},
+recordatorios(){
+  const ts=S.turnos.filter(t=>t.fecha===V.diaAviso&&t.estado==='pendiente').sort((a,b)=>a.hora.localeCompare(b.hora));
+  const falt=ts.filter(t=>!t.recordado).length;
+  return `<h1>🔔 Recordatorios</h1>
+  <div class="ayuda">Avisale a cada paciente su turno con un toque. <b>WhatsApp</b> abre el mensaje ya escrito, solo tenés que tocar enviar.</div>
+  <div class="chips"><button class="chip ${V.diaAviso===HOY?'on':''}" onclick="app.diaAviso(0)">Turnos de hoy</button>
+  <button class="chip ${V.diaAviso===addDias(HOY,1)?'on':''}" onclick="app.diaAviso(1)">Turnos de mañana</button>
+  <button class="chip ${V.diaAviso===addDias(HOY,2)?'on':''}" onclick="app.diaAviso(2)">Pasado mañana</button></div>
+  <div class="card row between" style="margin-bottom:14px"><div><b>${falt}</b> paciente(s) sin avisar · ${fLarga(V.diaAviso)}</div>
+  ${falt?`<button class="btn pri" onclick="app.avisarTodos()">✉ Avisar a todos por email</button>`:''}</div>
+  <div class="list">${ts.map(t=>{const p=pac(t.pac);return `<div class="item" style="border-left-color:${pro(t.pro).color}"><div class="hora">${t.hora}</div>
+  <div class="info"><b>${esc(p.nombre)}</b><div>${esc(t.prac)} · ${esc(pro(t.pro).nombre)}</div><div>📞 ${esc(p.tel)}</div></div>
+  ${t.recordado?'<span class="badge b-ok">✔ Avisado</span>':'<span class="badge b-pend">Sin avisar</span>'}
+  <div class="acc"><button class="btn wa" onclick="app.wa('${t.id}')">💬 WhatsApp</button><button class="btn" onclick="app.mail('${t.id}')">✉ Email</button></div></div>`}).join('')||'<div class="vacio">No hay turnos pendientes para ese día.</div>'}</div>
+  <div class="card" style="margin-top:18px"><b>🤖 Aviso automático</b> <span class="badge b-info">Versión final</span><div style="color:var(--muted);margin-top:4px">El sistema mandará el recordatorio solo, 24 horas antes de cada turno, por email (Resend / Brevo) y WhatsApp, sin que nadie tenga que hacer nada.</div></div>`;
+},
+cobros(){
+  const hoy=S.pagos.filter(p=>p.fecha===HOY);
+  const tot=hoy.reduce((a,p)=>a+Number(p.monto),0);
+  const por=METODOS.map(m=>[m,hoy.filter(p=>p.metodo===m).reduce((a,p)=>a+Number(p.monto),0)]);
+  const deudores=S.pacientes.map(p=>[p,saldo(p.id)]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]);
+  const ult=S.pagos.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha)).slice(0,12);
+  return `<div class="row between"><h1>💵 Cobros</h1><button class="btn pri big" onclick="app.nuevoCobro()">➕ Registrar cobro</button></div>
+  <div class="ayuda">Cada vez que un paciente paga, tocá <b>Registrar cobro</b>. Al final del día ves cuánto entró y de qué forma.</div>
+  <div class="card" style="margin-bottom:12px"><div style="color:var(--muted)">Total cobrado hoy</div><div style="font-size:2.2rem;font-weight:800">${plata(tot)}</div></div>
+  <div class="grid g4">${por.map(([m,v])=>`<div class="card stat"><b style="font-size:1.3rem">${plata(v)}</b><span>${m}</span></div>`).join('')}</div>
+  <h2>Pacientes que deben dinero</h2>
+  <div class="list">${deudores.map(([p,s])=>`<div class="item" style="border-left-color:var(--warn)"><div class="info"><b>${esc(p.nombre)}</b><div>De presupuestos aceptados</div></div><b style="font-size:1.15rem">${plata(s)}</b><button class="btn sm pri" onclick="app.nuevoCobro('${p.id}')">Cobrar</button></div>`).join('')||'<div class="vacio">Nadie debe dinero ✔</div>'}</div>
+  <h2>Últimos cobros</h2>
+  <div class="card"><table><tr><th>Fecha</th><th>Paciente</th><th>Forma</th><th style="text-align:right">Monto</th></tr>
+  ${ult.map(p=>`<tr><td>${fCorta(p.fecha)}</td><td>${esc(pac(p.pac).nombre)}<div style="color:var(--muted);font-size:.8rem">${esc(p.concepto)}</div></td><td>${p.metodo}</td><td style="text-align:right;font-weight:700">${plata(p.monto)}</td></tr>`).join('')}</table></div>`;
+}
+};
+
+function itemTurno(t){
+  const p=pac(t.pac),pr=pro(t.pro);
+  return `<div class="item" style="border-left-color:${pr.color}"><div class="hora">${t.hora}</div>
+  <div class="info"><b style="cursor:pointer;text-decoration:underline" onclick="app.verFicha('${t.pac}')">${esc(p.nombre)}</b>${p.alergias?' <span class="badge b-no">⚠ Alergia</span>':''}
+  <div>${esc(t.prac)} · <span class="dot" style="background:${pr.color}"></span> ${esc(pr.nombre)}</div></div>${badge(t.estado)}
+  <div class="acc">${t.estado==='pendiente'?`<button class="btn ok sm" onclick="app.estTurno('${t.id}','atendido')">✔ Atendido</button><button class="btn sm" onclick="app.estTurno('${t.id}','ausente')">No vino</button>`:`<button class="btn sm ghost" onclick="app.estTurno('${t.id}','pendiente')">↺ Deshacer</button>`}
+  <button class="btn danger sm" onclick="app.borrarTurno('${t.id}')" aria-label="Cancelar turno">🗑</button></div></div>`;
+}
+
+function odontograma(p){
+  const Q=[['Arriba · derecha',[18,17,16,15,14,13,12,11]],['Arriba · izquierda',[21,22,23,24,25,26,27,28]],['Abajo · derecha',[48,47,46,45,44,43,42,41]],['Abajo · izquierda',[31,32,33,34,35,36,37,38]]];
+  return `<div class="odonto">${Q.map(([n,ds])=>`<div class="quad"><small>${n}</small><div class="teeth">${ds.map(d=>{const e=p.dientes[d]||'sano';return `<button class="tooth ${e}" style="background:${e==='falta'?'':DIENTE[e][1]};${e!=='sano'&&e!=='falta'?'color:#fff;border-color:'+DIENTE[e][1]:''}" onclick="app.diente('${p.id}',${d})" title="Pieza ${d}: ${DIENTE[e][0]}">${d}</button>`}).join('')}</div></div>`).join('')}</div>
+  <div class="leyenda">${Object.values(DIENTE).map(([t,c])=>`<span><i style="background:${c}"></i>${t}</span>`).join('')}</div>`;
+}
+
+function ficha(id){
+  const p=pac(id);const s=saldo(id);
+  const edad=p.nac?Math.floor((Date.now()-parse(p.nac))/31557600000):'';
+  const prox=S.turnos.filter(t=>t.pac===id&&t.fecha>=HOY&&t.estado==='pendiente').sort((a,b)=>(a.fecha+a.hora).localeCompare(b.fecha+b.hora));
+  return `<button class="btn ghost" onclick="app.volver()">← Volver a la lista</button>
+  <div class="row between" style="margin-top:12px"><h1>${esc(p.nombre)}</h1><div class="row"><button class="btn" onclick="app.editarPac('${id}')">✏ Editar datos</button><button class="btn pri" onclick="app.nuevoTurno('${id}')">📅 Darle turno</button></div></div>
+  ${p.alergias?`<div class="alerta" style="margin:10px 0">⚠ ALERGIA: ${esc(p.alergias)}</div>`:''}
+  <div class="grid g2" style="margin-top:12px">
+    <div class="card"><b>Datos</b><div style="margin-top:6px">DNI: ${esc(p.dni)}<br>Edad: ${edad} años<br>Obra social: ${esc(p.os)}<br>📞 ${esc(p.tel)}<br>✉ ${esc(p.email)}</div></div>
+    <div class="card"><b>Cuenta</b><div style="margin-top:6px;font-size:1.3rem;font-weight:800;color:${s>0?'var(--warn)':'var(--ok)'}">${s>0?'Debe '+plata(s):'Al día ✔'}</div>
+    <b style="display:block;margin-top:10px">Próximos turnos</b>${prox.map(t=>`<div>${fCorta(t.fecha)} ${t.hora} · ${esc(t.prac)}</div>`).join('')||'<div style="color:var(--muted)">Sin turnos</div>'}</div>
+  </div>
+  <h2>Odontograma</h2><div class="card"><div class="ayuda" style="margin-top:0">Tocá un diente para marcar cómo está.</div>${odontograma(p)}</div>
+  <h2>Notas de cada visita</h2>
+  <div class="card"><label for="nota" style="margin-top:0">Escribir lo que se hizo hoy</label><textarea id="nota" placeholder="Ej: Se hizo limpieza. Volver en 6 meses."></textarea>
+  <label for="notaPro">Profesional</label><select id="notaPro">${optsPro(S.pros[0].id)}</select>
+  <div style="margin-top:12px"><button class="btn pri" onclick="app.nota('${id}')">💾 Guardar nota</button></div></div>
+  <div class="list" style="margin-top:12px">${p.notas.slice().reverse().map(n=>`<div class="item" style="border-left-color:${pro(n.pro).color}"><div class="info"><div>${fCorta(n.f)} · ${esc(pro(n.pro).nombre)}</div><b style="font-weight:500">${esc(n.t)}</b></div></div>`).join('')||'<div class="vacio">Sin notas todavía.</div>'}</div>`;
+}
+
+// ---------- acciones ----------
+const app={
+  ir(s){V.sec=s;if(s!=='pacientes')V.ficha=null;render()},
+  letra(){const h=document.documentElement;h.classList.toggle('grande');try{localStorage.setItem(KEY+'_letra',h.classList.contains('grande')?'1':'0')}catch(e){}},
+  dia(n){V.dia=addDias(V.dia,n);render()},
+  diaHoy(){V.dia=HOY;render()},
+  filtro(f){V.filtroPro=f;render()},
+  buscar(v){V.busca=v;const pos=v.length;render();const i=$('#busca');if(i){i.focus();i.setSelectionRange(pos,pos)}},
+  verFicha(id){V.sec='pacientes';V.ficha=id;render()},
+  volver(){V.ficha=null;render()},
+  diaAviso(n){V.diaAviso=addDias(HOY,n);render()},
+
+  nuevoTurno(pacId){
+    modal(`<h3>📅 Dar un turno</h3><div style="color:var(--muted)">Completá los datos y tocá Guardar.</div>
+    <label for="tPac">Paciente</label><select id="tPac" onchange="document.getElementById('nuevoBox').classList.toggle('hidden',this.value!=='__n')"><option value="__n">➕ Es un paciente nuevo</option>${optsPac(pacId||S.pacientes[0].id)}</select>
+    <div id="nuevoBox" class="hidden"><label for="tNom">Nombre y apellido</label><input id="tNom"><label for="tTel">Teléfono</label><input id="tTel" inputmode="tel"></div>
+    <label for="tPro">Odontólogo/a</label><select id="tPro">${optsPro(V.filtroPro!=='todos'?V.filtroPro:'p1')}</select>
+    <div class="grid g2"><div><label for="tFec">Día</label><input type="date" id="tFec" value="${V.sec==='turnos'?V.dia:HOY}"></div>
+    <div><label for="tHor">Hora</label><select id="tHor">${HORAS.map(h=>`<option ${h==='10:00'?'selected':''}>${h}</option>`).join('')}</select></div></div>
+    <label for="tPra">Qué se va a hacer</label><select id="tPra">${optsPrac('Consulta / control')}</select>
+    <div class="acc"><button class="btn ghost" onclick="app.cerrar()">Cancelar</button><button class="btn pri big" onclick="app.guardarTurno()">💾 Guardar turno</button></div>`);
+  },
+  guardarTurno(){
+    let pid=$('#tPac').value;
+    if(pid==='__n'){const n=$('#tNom').value.trim();if(!n)return toast('Escribí el nombre del paciente');
+      pid=uid();S.pacientes.push({id:pid,nombre:n,dni:'',tel:$('#tTel').value.trim(),email:'',nac:'',os:'Particular',alergias:'',dientes:{},notas:[]})}
+    const t={id:uid(),pac:pid,pro:$('#tPro').value,fecha:$('#tFec').value,hora:$('#tHor').value,prac:$('#tPra').value,estado:'pendiente',recordado:false};
+    if(!t.fecha)return toast('Elegí el día');
+    if(S.turnos.some(x=>x.pro===t.pro&&x.fecha===t.fecha&&x.hora===t.hora)&&!confirm(pro(t.pro).nombre+' ya tiene un turno a esa hora. ¿Guardarlo igual?'))return;
+    S.turnos.push(t);guardar();cerrar();V.sec='turnos';V.ficha=null;V.dia=t.fecha;render();toast('✔ Turno guardado: '+fLarga(t.fecha)+' '+t.hora);
+  },
+  estTurno(id,e){const t=S.turnos.find(x=>x.id===id);t.estado=e;guardar();render();toast(e==='atendido'?'✔ Marcado como atendido':e==='ausente'?'Marcado: no vino':'Cambio deshecho')},
+  borrarTurno(id){const t=S.turnos.find(x=>x.id===id);if(!confirm('¿Cancelar el turno de '+pac(t.pac).nombre+' a las '+t.hora+'?'))return;S.turnos=S.turnos.filter(x=>x.id!==id);guardar();render();toast('Turno cancelado')},
+
+  editarPac(id){
+    const p=id?pac(id):{nombre:'',dni:'',tel:'',email:'',nac:'',os:'',alergias:''};
+    modal(`<h3>${id?'✏ Editar paciente':'➕ Paciente nuevo'}</h3>
+    <label for="pNom">Nombre y apellido</label><input id="pNom" value="${esc(p.nombre)}">
+    <div class="grid g2"><div><label for="pDni">DNI</label><input id="pDni" inputmode="numeric" value="${esc(p.dni)}"></div><div><label for="pNac">Fecha de nacimiento</label><input type="date" id="pNac" value="${esc(p.nac)}"></div></div>
+    <div class="grid g2"><div><label for="pTel">Teléfono (WhatsApp)</label><input id="pTel" inputmode="tel" value="${esc(p.tel)}"></div><div><label for="pMail">Email</label><input id="pMail" type="email" value="${esc(p.email)}"></div></div>
+    <label for="pOs">Obra social</label><input id="pOs" list="osl" value="${esc(p.os)}"><datalist id="osl"><option>Particular</option><option>PAMI</option><option>OSDE</option><option>Swiss Medical</option><option>ISSN</option></datalist>
+    <label for="pAl">Alergias (dejar vacío si no tiene)</label><input id="pAl" value="${esc(p.alergias)}">
+    <div class="acc"><button class="btn ghost" onclick="app.cerrar()">Cancelar</button><button class="btn pri big" onclick="app.guardarPac('${id||''}')">💾 Guardar</button></div>`);
+  },
+  guardarPac(id){
+    const d={nombre:$('#pNom').value.trim(),dni:$('#pDni').value.trim(),nac:$('#pNac').value,tel:$('#pTel').value.trim(),email:$('#pMail').value.trim(),os:$('#pOs').value.trim()||'Particular',alergias:$('#pAl').value.trim()};
+    if(!d.nombre)return toast('Escribí el nombre del paciente');
+    if(id)Object.assign(pac(id),d);else{id=uid();S.pacientes.push({id,...d,dientes:{},notas:[]})}
+    guardar();cerrar();V.sec='pacientes';V.ficha=id;render();toast('✔ Datos guardados');
+  },
+  diente(pid,d){
+    const p=pac(pid);const act=p.dientes[d]||'sano';
+    modal(`<h3>Pieza ${d}</h3><div style="color:var(--muted)">¿Cómo está este diente?</div><div class="estado-pick" style="margin-top:14px">
+    ${Object.entries(DIENTE).map(([k,[t,c]])=>`<button class="btn ${k===act?'pri':''}" onclick="app.setDiente('${pid}',${d},'${k}')"><i style="background:${c}"></i>${t}</button>`).join('')}</div>
+    <div class="acc"><button class="btn ghost" onclick="app.cerrar()">Cerrar</button></div>`);
+  },
+  setDiente(pid,d,k){const p=pac(pid);if(k==='sano')delete p.dientes[d];else p.dientes[d]=k;guardar();cerrar();render();toast('Pieza '+d+': '+DIENTE[k][0])},
+  nota(pid){const t=$('#nota').value.trim();if(!t)return toast('Escribí la nota primero');pac(pid).notas.push({f:HOY,pro:$('#notaPro').value,t});guardar();render();toast('✔ Nota guardada')},
+
+  nuevoPres(){
+    modal(`<h3>📝 Nuevo presupuesto</h3>
+    <label for="prPac">Paciente</label><select id="prPac">${optsPac(S.pacientes[0].id)}</select>
+    <label for="prPro">Odontólogo/a</label><select id="prPro">${optsPro('p1')}</select>
+    <label>Prácticas</label><div id="prItems"></div>
+    <button class="btn ghost" style="margin-top:8px" onclick="app.itemPres()">➕ Agregar otra práctica</button>
+    <div class="total">Total: <span id="prTot">$ 0</span></div>
+    <div class="acc"><button class="btn ghost" onclick="app.cerrar()">Cancelar</button><button class="btn pri big" onclick="app.guardarPres()">💾 Guardar</button></div>`);
+    app.itemPres();
+  },
+  itemPres(){
+    const div=document.createElement('div');div.className='card';div.style.cssText='margin-bottom:8px;padding:10px';
+    div.innerHTML=`<select class="iPra" onchange="this.parentNode.querySelector('.iPre').value=this.selectedOptions[0].dataset.p;app.totPres()">${optsPrac()}</select>
+    <div class="grid g2" style="margin-top:8px"><input class="iDie" placeholder="Diente (opcional)" inputmode="numeric"><input class="iPre" inputmode="numeric" value="${PRACTICAS[0][1]}" oninput="app.totPres()" aria-label="Precio"></div>
+    <button class="btn sm danger" style="margin-top:8px" onclick="this.parentNode.remove();app.totPres()">Quitar</button>`;
+    $('#prItems').appendChild(div);app.totPres();
+  },
+  totPres(){let t=0;document.querySelectorAll('#prItems .iPre').forEach(i=>t+=Number(i.value.replace(/\D/g,''))||0);$('#prTot').textContent=plata(t)},
+  guardarPres(){
+    const items=[...document.querySelectorAll('#prItems .card')].map(c=>({prac:c.querySelector('.iPra').value,diente:c.querySelector('.iDie').value.trim(),precio:Number(c.querySelector('.iPre').value.replace(/\D/g,''))||0}));
+    if(!items.length)return toast('Agregá al menos una práctica');
+    S.presupuestos.push({id:uid(),pac:$('#prPac').value,pro:$('#prPro').value,fecha:HOY,estado:'pendiente',items});guardar();cerrar();render();toast('✔ Presupuesto guardado');
+  },
+  estPres(id,e){S.presupuestos.find(p=>p.id===id).estado=e;guardar();render();toast(e==='aceptado'?'✔ Presupuesto aceptado':'Marcado como no aceptado')},
+  imprimir(id){
+    const p=S.presupuestos.find(x=>x.id===id);const w=window.open('','_blank');if(!w)return toast('Permití las ventanas emergentes para imprimir');
+    w.document.write(`<html><head><title>Presupuesto</title><style>body{font-family:Arial;padding:40px;font-size:16px}table{width:100%;border-collapse:collapse;margin-top:20px}td,th{border-bottom:1px solid #ccc;padding:10px;text-align:left}.t{text-align:right;font-size:22px;font-weight:bold;margin-top:20px}</style></head><body>
+    <h1>🦷 ${CLINICA}</h1><h2>Presupuesto</h2><p><b>Paciente:</b> ${esc(pac(p.pac).nombre)}<br><b>Profesional:</b> ${esc(pro(p.pro).nombre)}<br><b>Fecha:</b> ${fCorta(p.fecha)}</p>
+    <table><tr><th>Práctica</th><th>Diente</th><th style="text-align:right">Precio</th></tr>${p.items.map(i=>`<tr><td>${esc(i.prac)}</td><td>${esc(i.diente)||'-'}</td><td style="text-align:right">${plata(i.precio)}</td></tr>`).join('')}</table>
+    <div class="t">Total: ${plata(totalPres(p))}</div><p style="margin-top:40px;color:#666">Presupuesto válido por 30 días.</p><script>print()<\/script></body></html>`);w.document.close();
+  },
+
+  msg(t){const p=pac(t.pac);return `Hola ${p.nombre.split(' ')[0]}! Te recordamos tu turno en ${CLINICA} el ${fLarga(t.fecha)} a las ${t.hora} hs con ${pro(t.pro).nombre}. Por favor confirmá respondiendo SÍ, o avisanos si no podés venir. ¡Gracias!`},
+  wa(id){const t=S.turnos.find(x=>x.id===id);let n=pac(t.pac).tel.replace(/\D/g,'');if(n&&!n.startsWith('54'))n='549'+n;window.open('https://wa.me/'+n+'?text='+encodeURIComponent(app.msg(t)),'_blank');t.recordado=true;guardar();render();toast('✔ Marcado como avisado')},
+  mail(id){const t=S.turnos.find(x=>x.id===id);location.href='mailto:'+encodeURIComponent(pac(t.pac).email)+'?subject='+encodeURIComponent('Recordatorio de turno - '+CLINICA)+'&body='+encodeURIComponent(app.msg(t));t.recordado=true;guardar();setTimeout(render,300)},
+  avisarTodos(){const ts=S.turnos.filter(t=>t.fecha===V.diaAviso&&t.estado==='pendiente'&&!t.recordado);ts.forEach(t=>t.recordado=true);guardar();render();toast('✔ '+ts.length+' email(s) enviados (simulado en la beta)')},
+
+  nuevoCobro(pid){
+    const s=pid?saldo(pid):0;
+    modal(`<h3>💵 Registrar cobro</h3>
+    <label for="cPac">Paciente</label><select id="cPac">${optsPac(pid||S.pacientes[0].id)}</select>
+    <label for="cMon">Monto ($)</label><input id="cMon" inputmode="numeric" value="${s>0?s:''}" placeholder="Ej: 25000" style="font-size:1.4rem;font-weight:800">
+    <label>Forma de pago</label><div class="metodos" id="cMet">${METODOS.map((m,i)=>`<button class="btn ${i===0?'on':''}" onclick="document.querySelectorAll('#cMet button').forEach(b=>b.classList.remove('on'));this.classList.add('on')">${m}</button>`).join('')}</div>
+    <label for="cCon">Concepto</label><input id="cCon" value="${pid?'Pago a cuenta':'Consulta'}">
+    <div class="acc"><button class="btn ghost" onclick="app.cerrar()">Cancelar</button><button class="btn ok big" onclick="app.guardarCobro()">💾 Guardar cobro</button></div>`);
+  },
+  guardarCobro(){
+    const m=Number($('#cMon').value.replace(/\D/g,''));if(!m)return toast('Escribí el monto');
+    S.pagos.push({id:uid(),pac:$('#cPac').value,fecha:HOY,monto:m,metodo:$('#cMet .on').textContent,concepto:$('#cCon').value.trim()});guardar();cerrar();V.sec='cobros';render();toast('✔ Cobro de '+plata(m)+' guardado');
+  },
+
+  cerrar,
+  reset(){if(confirm('¿Borrar todo y volver a los datos de ejemplo?')){S=semilla();guardar();V.ficha=null;render();toast('Datos de ejemplo restaurados')}}
+};
+window.app=app;
+document.addEventListener('keydown',e=>{if(e.key==='Escape')cerrar()});
+render();
+})();
+</script>
+</body>
+</html>
