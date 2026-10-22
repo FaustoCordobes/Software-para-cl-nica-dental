@@ -104,6 +104,8 @@ td,th{padding:10px 6px;border-bottom:1px solid var(--line);text-align:left}
 footer{max-width:1100px;margin:30px auto 0;padding:0 16px;color:var(--muted);font-size:.85rem}
 footer .stack{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
 footer .stack span{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.autor{margin:22px 0 10px;padding:18px;border-radius:var(--radius);background:var(--card);border:1px solid var(--line);text-align:center;color:var(--text);font-size:1rem;display:flex;flex-direction:column;align-items:center;gap:8px}
+.autor a{text-decoration:none;display:inline-flex;align-items:center}
 .bottomnav{display:none}
 .hidden{display:none!important}
 @media (max-width:760px){
@@ -137,6 +139,11 @@ footer .stack span{background:var(--card);border:1px solid var(--line);border-ra
 <footer>
   <b>Versión beta de prueba.</b> Todo lo que ves en esta app es una demostración: los pacientes, turnos y cobros son datos de ejemplo.
   <div style="margin-top:8px"><button class="btn sm ghost" onclick="app.reset()">Restaurar datos de ejemplo</button></div>
+  <div class="autor">
+    <b>Propiedad de Cordobes Fausto</b>
+    <div>Si gustás implementar o crear algo, contactame directo:</div>
+    <a id="waFausto" class="btn wa big" target="_blank" rel="noopener">💬 Hacé click aquí</a>
+  </div>
 </footer>
 
 <nav class="bottomnav" id="bnav"></nav>
@@ -158,6 +165,9 @@ const PRACTICAS=[['Consulta / control',25000],['Limpieza',40000],['Arreglo de ca
 const DIENTE={sano:['Sano','#ffffff'],caries:['Caries','#ef4444'],arreglado:['Arreglado','#3b82f6'],corona:['Corona','#f59e0b'],conducto:['Trat. de conducto','#8b5cf6'],falta:['Falta / extraído','#d1d5db']};
 const METODOS=['Efectivo','Transferencia','Débito','Crédito'];
 const KEY='clinica_dental_beta_v1';
+// WhatsApp de contacto (código país + 9 + área + número, solo dígitos). EJEMPLO: 5492972123456
+const WA_FAUSTO='5492972000000';
+document.getElementById('waFausto').href='https://wa.me/'+WA_FAUSTO+'?text='+encodeURIComponent('Vine desde tu app de prueba y quiero hablar con vos sobre Clínica Dental Sonrisa');
 
 // ---------- utilidades ----------
 const $=s=>document.querySelector(s);
