@@ -135,9 +135,7 @@ footer .stack span{background:var(--card);border:1px solid var(--line);border-ra
 <main id="main"></main>
 
 <footer>
-  <b>Versión de prueba (beta).</b> Los datos son de ejemplo y se guardan solo en este navegador.
-  <div class="stack"><span>Next.js</span><span>Supabase</span><span>Firebase</span><span>Resend</span><span>Brevo</span><span>Vercel</span></div>
-  La versión final usará estas herramientas para guardar todo en la nube y enviar los recordatorios solos.
+  <b>Versión beta de prueba.</b> Todo lo que ves en esta app es una demostración: los pacientes, turnos y cobros son datos de ejemplo.
   <div style="margin-top:8px"><button class="btn sm ghost" onclick="app.reset()">Restaurar datos de ejemplo</button></div>
 </footer>
 
@@ -318,7 +316,7 @@ recordatorios(){
   <div class="info"><b>${esc(p.nombre)}</b><div>${esc(t.prac)} · ${esc(pro(t.pro).nombre)}</div><div>📞 ${esc(p.tel)}</div></div>
   ${t.recordado?'<span class="badge b-ok">✔ Avisado</span>':'<span class="badge b-pend">Sin avisar</span>'}
   <div class="acc"><button class="btn wa" onclick="app.wa('${t.id}')">💬 WhatsApp</button><button class="btn" onclick="app.mail('${t.id}')">✉ Email</button></div></div>`}).join('')||'<div class="vacio">No hay turnos pendientes para ese día.</div>'}</div>
-  <div class="card" style="margin-top:18px"><b>🤖 Aviso automático</b> <span class="badge b-info">Versión final</span><div style="color:var(--muted);margin-top:4px">El sistema mandará el recordatorio solo, 24 horas antes de cada turno, por email (Resend / Brevo) y WhatsApp, sin que nadie tenga que hacer nada.</div></div>`;
+  <div class="card" style="margin-top:18px"><b>🤖 Aviso automático</b> <span class="badge b-info">Versión final</span><div style="color:var(--muted);margin-top:4px">El sistema mandará el recordatorio solo, 24 horas antes de cada turno, por email y WhatsApp, sin que nadie tenga que hacer nada.</div></div>`;
 },
 cobros(){
   const hoy=S.pagos.filter(p=>p.fecha===HOY);
